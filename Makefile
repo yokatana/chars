@@ -4,7 +4,7 @@ mandir ?= $(prefix)/share/man
 
 CFLAGS += -g --std=c99
 
-.PHONY: all check clean
+.PHONY: all check clean install uninstall test-out
 
 all: chars
 
