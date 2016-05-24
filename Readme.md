@@ -44,7 +44,7 @@ Usage
                             (only for --chars; default: enabled)
      -q, --[no-]quote       quote characters with " (default: no)
 
-    Output style options with printf quivalents:
+    Output style options with printf equivalents:
      -c, --chars            ASCII characters (default)         %c
      -u, --decimal          ASCII codepoints                   %3i
      -x, --hex              ASCII codepoints in hex            %02x

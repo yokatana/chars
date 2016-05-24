@@ -23,7 +23,7 @@ static const char* const usage =
 "     --[no-]escape      escape non-printable characters in C style\n"
 "                        (only for --chars; default: enabled)\n"
 " -q, --[no-]quote       quote characters with \" (default: no)\n\n"
-"Output style options with printf quivalents:\n"
+"Output style options with printf equivalents:\n"
 " -c, --chars            ASCII characters (default)         %%c\n"
 " -u, --decimal          ASCII codepoints                   %%3i\n"
 " -x, --hex              ASCII codepoints in hex            %%02x\n"
