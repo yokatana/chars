@@ -28,7 +28,7 @@ static const char* const usage =
 " -u, --decimal          ASCII codepoints                   %%3i\n"
 " -x, --hex              ASCII codepoints in hex            %%02x\n"
 " -X, --Hex              ASCII codepoints in uppercase hex  %%02X\n\n"
-"Also see the man page; man chars\n";
+"Also see the man page: man chars\n";
 
 struct fmt_entry {
 	const char* short_opt;
