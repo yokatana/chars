@@ -27,8 +27,8 @@ install: chars chars.1
 	install chars.1 $(mandir)/man1/chars.1
 
 uninstall:
-	rm -f $(bindir)/json-yaml
-	rm -f $(mandir)/man1/json-yaml.1
+	rm -f $(bindir)/chars
+	rm -f $(mandir)/man1/chars.1
 
 # Run this to regenerate the test cases
 test-out: chars
