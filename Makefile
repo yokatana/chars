@@ -1,3 +1,7 @@
+prefix ?= /usr/local
+bindir ?= $(prefix)/bin
+mandir ?= $(prefix)/share/man
+
 CFLAGS += -g --std=c99
 
 .PHONY: all check clean
@@ -16,6 +20,15 @@ check: chars
 clean:
 	rm -f chars
 	rm -rf chars.dSYM
+
+install: chars chars.1
+	mkdir -p $(bindir) $(mandir)/man1
+	install chars $(bindir)/chars
+	install chars.1 $(mandir)/man1/chars.1
+
+uninstall:
+	rm -f $(bindir)/json-yaml
+	rm -f $(mandir)/man1/json-yaml.1
 
 # Run this to regenerate the test cases
 test-out: chars
