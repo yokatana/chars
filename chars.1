@@ -1,0 +1,74 @@
+.TH CHARS 1 2016-05-24
+.SH NAME
+chars - split files into separated characters
+.SH SYNOPSIS
+.B chars \fR[\fPOPTIONS\fR]\fP
+.SH DESCRIPTION
+Split files into characters, one per line or separated by spaces, with
+additional formatting and escaping options.
+
+By default, characters are printed one per line and non-printable characters
+are escaped.
+.SH OPTIONS
+.SS General options
+.TP
+.B -v, --version
+Print version number and exit.
+.TP
+.B -h, --help
+Print a help message and exit.
+.TP
+.BI -i " FILE, " --input " FILE"
+File to write the output to. Use a hyphen (-) to write to standard output,
+which is the default.
+.TP
+.BI -o " FILE, " --output " FILE"
+File to read the input from, Use a hyphen (-) to read from standard input,
+which is the ddefault.
+.TP
+.BI --only " CLASS"
+Only output characters of the given class, ignoring any other characters from
+the input stream. Values for \fICLASS\fP: \fBall\fP (default), \fBprintable\fP
+.TP
+.BI --multiline
+Output one character per line. This is the default.
+
+When combined with \fB--chars\fP (the default) and \fB--no-escape\fP, newline
+characters will result in a double newline: first the character, then the
+separator.
+.TP
+.BI --oneline
+Output characters one one line, separated by spaces.
+
+When combined with \fB--chars\fP (the default) and \fB--no-escape\fP, newline
+characters will be output as-is, creating line.
+breaks.
+.TP
+.BI --[no-]escape
+Escape non-printable characters in C style. Enabled by default. This only
+applies to \fB--chars\fP (the default).
+
+When using this option together with \fB--chars\fP (the default) and
+\fB--oneline\fP without \fB--quote\fP, spaces are also escaped.
+.TP
+.BI -q ", " --[no-]quote
+Quote characters with a double qoute character: ". Disabled by default.
+.SS Output style options
+.TP
+.BI -c ", " --chars
+Output the ASCII characters. This is the default. Equivalent to the
+\fIprintf(2)\fP format string \fB%c\fP.
+.TP
+.BI -u ", " --decimal
+Output decimal ASCII codepoints. Equivalent to the \fIprintf(2)\fP format
+string \fB%3i\fP.
+.TP
+.BI -x ", " --hex
+Output lower case hexadecimal ASCII codepoints. Equivalent to the
+\fIprintf(2)\fP format string \fB%02x\fP.
+.TP
+.BI -X ", " --Hex
+Output upper case hexadecimal ASCII codepoints. Equivalent to the
+\fIprintf(2)\fP format string \fB%02X\fP.
+.SH AUTHOR
+Written by Iku <iku@yokatana.com>, 2016.
