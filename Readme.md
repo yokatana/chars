@@ -50,6 +50,8 @@ Usage
      -x, --hex              ASCII codepoints in hex            %02x
      -X, --Hex              ASCII codepoints in uppercase hex  %02X
 
+    Also see the man page: man chars
+
 Building & Installing
 ---------------------
 
