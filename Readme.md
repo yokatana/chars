@@ -60,6 +60,17 @@ Building & Installing
     # to regenerate the test cases when needed
     make test-out
 
+Links
+-----
+
+Home page:
+https://github.com/yokatana/chars
+
+Builds:
+https://travis-ci.org/yokatana/chars
+
+[![Build Status](https://travis-ci.org/yokatana/chars.svg?branch=master)](https://travis-ci.org/yokatana/chars)
+
 Author
 ------
 
