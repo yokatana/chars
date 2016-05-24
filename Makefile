@@ -6,7 +6,10 @@ CFLAGS += -g --std=c99
 
 .PHONY: all check clean install uninstall test-out
 
-all: chars
+all: chars chars.1.gz
+
+%.gz: %
+	gzip -k $<
 
 check: chars
 	./chars             < test-in.txt | diff -u test-out/standard.txt  -
@@ -18,17 +21,17 @@ check: chars
 	./chars -u          < test-in.txt | diff -u test-out/decimal.txt   -
 
 clean:
-	rm -f chars
+	rm -f chars chars.1.gz
 	rm -rf chars.dSYM
 
 install: chars chars.1
 	mkdir -p $(bindir) $(mandir)/man1
 	install chars $(bindir)/chars
-	install chars.1 $(mandir)/man1/chars.1
+	install chars.1.gz $(mandir)/man1/chars.1.gz
 
 uninstall:
 	rm -f $(bindir)/chars
-	rm -f $(mandir)/man1/chars.1
+	rm -f $(mandir)/man1/chars.1.gz
 
 # Run this to regenerate the test cases
 test-out: chars
