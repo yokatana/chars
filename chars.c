@@ -8,23 +8,21 @@
 #define PROG_VERSION	"0.1"
 
 static const char* const usage =
-"Usage: " PROG_NAME " [OPTIONS]\n\n"
+"Usage: " PROG_NAME " [OPTIONS] [FILE]\n\n"
 "Split files into characters, one per line or separated by spaces, with\n"
 "additional formatting and escaping options.\n\n"
+"FILE is used at the input file. When a hyphen (-) or omitted, standard\n"
+"input is used.\n\n"
 "General options:\n"
 " -v, --version          print version number and exit\n"
 " -h, --help             print this message and exit\n"
-" -i, --input   <file>   path or - for standard input (default)\n"
 " -o, --output  <file>   path or - for standard output (default)\n"
-"     --only    <class>  print 'all' or 'printable' (default) characters\n"
-" -p                     shortcut for  --only printable\n"
-"     --multiline        print one character per line (default)\n"
-"     --oneline          print the characters separated by spaces\n"
-"     --[no-]escape      escape non-printable characters in C style\n"
-"                        (only for --chars; default: enabled)\n"
-" -q, --[no-]quote       quote characters with \" (default: no)\n\n"
+" -p, --printable        skip control characters from the input\n"
+" -s  --oneline          separate output by spaces, not newlines\n"
+" -r  --raw              don't escape control characters\n"
+" -q  --quote            qoute characters with \"\n"
 "Output style options with printf quivalents:\n"
-" -c, --chars            ASCII characters (default)         %%c\n"
+"                        ASCII characters (default)         %%c\n"
 " -u, --decimal          ASCII codepoints                   %%3i\n"
 " -x, --hex              ASCII codepoints in hex            %%02x\n"
 " -X, --Hex              ASCII codepoints in uppercase hex  %%02X\n\n"
@@ -37,7 +35,6 @@ struct fmt_entry {
 };
 
 static const struct fmt_entry fmt_table[] = {
-	{ "-c", "--chars", "%c" },
 	{ "-u", "--decimal", "%3u" },
 	{ "-x", "--hex", "%02x" },
 	{ "-X", "--Hex", "%02X" }
@@ -133,58 +130,36 @@ int main(int argc, const char* argv[])
 				strcmp("--help", arg) == 0) {
 			printf(usage);
 			exit(EXIT_SUCCESS);
-		} else if (strcmp("-i", arg) == 0 ||
-				strcmp("--input", arg) == 0) {
-			if (argc <= i + 1) {
-				missing_val(arg);
-			}
-			inpath = path_from_opt(argv[++i]);
 		} else if (strcmp("-o", arg) == 0 ||
 				strcmp("--outpath", arg) == 0) {
 			if (argc <= i + 1) {
 				missing_val(arg);
 			}
 			outpath = path_from_opt(argv[++i]);
-		} else if (strcmp("--only", arg) == 0) {
-			if (argc <= i + 1) {
-				missing_val(arg);
-			}
-			const char* val = argv[++i];
-			if (strcmp("all", val) == 0) {
-				only_printable = false;
-			} else if (strcmp("printable", val) == 0) {
-				only_printable = true;
-			} else {
-				fprintf(stderr, PROG_NAME ": "
-					"invalid value for %s, try -h\n",
-					arg);
-				exit(EXIT_FAILURE);
-			}
-		} else if (strcmp("-p", arg) == 0) {
+		} else if (strcmp("-p", arg) == 0 ||
+				strcmp("--printable", arg) == 0) {
 			only_printable = true;
-		} else if (strcmp("--multiline", arg) == 0) {
-			oneline = false;
-		} else if (strcmp("--oneline", arg) == 0) {
+		} else if (strcmp("-s", arg) == 0 ||
+				strcmp("--oneline", arg) == 0) {
 			oneline = true;
-		} else if (strcmp("--escape", arg) == 0) {
-			escape = true;
-		} else if (strcmp("--no-escape", arg) == 0) {
+		} else if (strcmp("-r", arg) == 0 ||
+				strcmp("--raw", arg) == 0) {
 			escape = false;
 		} else if (strcmp("-q", arg) == 0 ||
 				strcmp("--quote", arg) == 0) {
 			quote = true;
-		} else if (strcmp("--no-quote", arg) == 0) {
-			quote = false;
 		} else if ((new_fmt = fmt_from_opt(arg))) {
 			fmt = new_fmt;
 		} else if (arg[0] == '-') {
 			fprintf(stderr, PROG_NAME ": "
 				"unrecognized option: %s, try -h\n", arg);
 			exit(EXIT_FAILURE);
-		} else {
+		} else if (inpath) {
 			fprintf(stderr, PROG_NAME ": "
 				"unexpected argument: %s, try -h\n", arg);
 			exit(EXIT_FAILURE);
+		} else {
+			inpath = path_from_opt(arg);
 		}
 	}
 

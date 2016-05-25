@@ -9,13 +9,14 @@ CFLAGS += -g --std=c99
 all: chars
 
 check: chars
-	./chars             < test-in.txt | diff -u test-out/standard.txt  -
-	./chars -p          < test-in.txt | diff -u test-out/printable.txt -
-	./chars --oneline   < test-in.txt | diff -u test-out/oneline.txt   -
-	./chars --no-escape < test-in.txt | diff -u test-out/no-escape.txt -
-	./chars -x          < test-in.txt | diff -u test-out/hex.txt       -
-	./chars -X          < test-in.txt | diff -u test-out/hex-upper.txt -
-	./chars -u          < test-in.txt | diff -u test-out/decimal.txt   -
+	./chars    < test-in.txt | diff -u test-out/standard.txt  -
+	./chars -p < test-in.txt | diff -u test-out/printable.txt -
+	./chars -s < test-in.txt | diff -u test-out/oneline.txt   -
+	./chars -r < test-in.txt | diff -u test-out/raw.txt       -
+	./chars -q < test-in.txt | diff -u test-out/quote.txt     -
+	./chars -x < test-in.txt | diff -u test-out/hex.txt       -
+	./chars -X < test-in.txt | diff -u test-out/hex-upper.txt -
+	./chars -u < test-in.txt | diff -u test-out/decimal.txt   -
 
 clean:
 	rm -f chars
@@ -33,10 +34,11 @@ uninstall:
 # Run this to regenerate the test cases
 test-out: chars
 	mkdir -p test-out
-	./chars -i test-in.txt -o test-out/standard.txt
-	./chars -i test-in.txt -o test-out/printable.txt --only printable
-	./chars -i test-in.txt -o test-out/oneline.txt   --oneline
-	./chars -i test-in.txt -o test-out/no-escape.txt --no-escape
-	./chars -i test-in.txt -o test-out/hex.txt       --hex
-	./chars -i test-in.txt -o test-out/hex-upper.txt --Hex
-	./chars -i test-in.txt -o test-out/decimal.txt   --decimal
+	./chars test-in.txt -o test-out/standard.txt
+	./chars test-in.txt -o test-out/printable.txt --printable
+	./chars test-in.txt -o test-out/oneline.txt   --oneline
+	./chars test-in.txt -o test-out/raw.txt       --raw
+	./chars test-in.txt -o test-out/quote.txt     --quote
+	./chars test-in.txt -o test-out/hex.txt       --hex
+	./chars test-in.txt -o test-out/hex-upper.txt --Hex
+	./chars test-in.txt -o test-out/decimal.txt   --decimal
