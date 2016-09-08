@@ -2,54 +2,47 @@
 .SH NAME
 chars - split files into separated characters
 .SH SYNOPSIS
-.B chars \fR[\fPOPTIONS\fR]\fP
+.B chars
+.RI [ options ]
+.RI [ file ]
 .SH DESCRIPTION
-Split files into characters, one per line or separated by spaces, with
-additional formatting and escaping options.
+Split files into characters, one per line or separated by spaces
+with additional formatting and escaping options.
 
-By default, characters are printed one per line and non-printable characters
-are escaped.
+The \fIfiles\fP parameter, if set, is used as the input file.
+If unset, or when the value is \fB-\fP, standard input is used.
+By default, characters are printed one per line and
+non-printable characters are escaped.
 .SH OPTIONS
 .SS General options
 .TP
-.B -v, --version
+.BR -v ", " --version
 Print version number and exit.
 .TP
-.B -h, --help
+.BR -h ", " --help
 Print a help message and exit.
 .TP
-.BI -i " FILE, " --input " FILE"
-File to write the output to. Use a hyphen (-) to write to standard output,
-which is the default.
-.TP
 .BI -o " FILE, " --output " FILE"
-File to read the input from, Use a hyphen (-) to read from standard input,
-which is the ddefault.
+File to write the output to.
+Use a hyphen (\fB-\fP) to write to standard output, which is the default.
 .TP
-.BI --only " CLASS"
-Only output characters of the given class, ignoring any other characters from
-the input stream. Values for \fICLASS\fP: \fBall\fP (default), \fBprintable\fP
-.TP
-.BI --multiline
-Output one character per line. This is the default.
-
-When combined with \fB--chars\fP (the default) and \fB--no-escape\fP, newline
-characters will result in a double newline: first the character, then the
-separator.
-.TP
+.BI -p ", " --printable
+Skip control characters in the input.
 .BI --oneline
 Output characters one one line, separated by spaces.
 
-When combined with \fB--chars\fP (the default) and \fB--no-escape\fP, newline
-characters will be output as-is, creating line.
-breaks.
+When combined with \fB--raw\fP
+and none of the output format options (\fB-uxX\fP)
+or \fB--quote\fP,
+newline characters will be output as-is, creating line. breaks.
 .TP
-.BI --[no-]escape
-Escape non-printable characters in C style. Enabled by default. This only
-applies to \fB--chars\fP (the default).
+.BR -r ", " --raw
+Do not escape non-printable characters.
 
-When using this option together with \fB--chars\fP (the default) and
-\fB--oneline\fP without \fB--quote\fP, spaces are also escaped.
+When combined with \fB--oneline\fP
+and none of the output format options (\fB-uxX\fP)
+or \fB--quote\fP,
+newline characters will be output as-is, creating line. breaks.
 .TP
 .BI -q ", " --[no-]quote
 Quote characters with a double qoute character: ". Disabled by default.
